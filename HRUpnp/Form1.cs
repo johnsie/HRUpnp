@@ -33,7 +33,9 @@ namespace HRUpnp
 
         private void startHover()
         {
-          string strWorkingDir = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+            this.Hide();
+            
+            string strWorkingDir = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -50,6 +52,15 @@ namespace HRUpnp
             //  string output = process.StandardOutput.ReadToEnd();
             // MessageBox.Show(output);
             process.WaitForExit();
+          
+            
+            //Little bit of cleaning up after they quit the game
+            execCmd("-d 9350 TCP");
+
+            execCmd("-d 9351 TCP");
+  
+            execCmd("-d 9351 UDP");
+            Application.Exit();
         }
 
 
@@ -127,5 +138,6 @@ namespace HRUpnp
             startHover();
         }
 
+      
     }//end class
 }//end namespace
